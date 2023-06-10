@@ -10,6 +10,7 @@ const createColor = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
 const updateColor = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);
@@ -22,6 +23,7 @@ const updateColor = asyncHandler(async (req, res) => {
     throw new Error(error);
   }
 });
+
 const deleteColor = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);
