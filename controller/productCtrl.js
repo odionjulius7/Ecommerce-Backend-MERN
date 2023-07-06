@@ -78,7 +78,7 @@ const getAllProduct = asyncHandler(async (req, res) => {
   try {
     // Filtering products
     const queryObj = { ...req.query };
-    const excludeFields = ["page", "sort", "limit", "fields"];
+    const excludeFields = ["page", "sort", "limit", "fields"]; // exclude for pagination and others name
     excludeFields.forEach((el) => delete queryObj[el]);
     let queryStr = JSON.stringify(queryObj);
     /*
@@ -92,7 +92,7 @@ const getAllProduct = asyncHandler(async (req, res) => {
      * but we sort, limit (select itms to show), pagination if queried by
      *  users and send back the updated/altered query products
      */
-    let query = Product.find(JSON.parse(queryStr));
+    let query = Product.find(JSON.parse(queryStr)).populate("color");
 
     // Sorting products (A - Z , Highest - lowest) // older - newest
     if (req.query.sort) {
@@ -119,7 +119,7 @@ const getAllProduct = asyncHandler(async (req, res) => {
     const page = req.query.page; // page number
     const limit = req.query.limit; // items per page
     /*
-     *  skipping items, at first it won't skip any do t page = 1
+     *  skipping items, at first it won't skip any, cos page = 1
      * but on subsequent it will skip items from the 1st and so on
      * if, limit(items) is 3 and page = 1, skip will = 0
      * but limit 3 , page 2 then it will skip the first 3(items) and so on
