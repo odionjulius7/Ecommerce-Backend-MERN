@@ -28,7 +28,7 @@ const uploadPhoto = multer({
 });
 
 /* The productImgResize and blogImgResize functions are middleware functions that
- *handle image resizing(with sharp) after file upload.
+ * handle image resizing(with sharp) after file upload.
  */
 const productImgResize = async (req, res, next) => {
   // if no file continue to the next() func, e.g submit other data without file then
@@ -38,11 +38,13 @@ const productImgResize = async (req, res, next) => {
       await sharp(file.path)
         .resize(300, 300)
         .toFormat("jpeg")
-        .jpeg({ quality: 90 })
-        .toFile(`public/images/products/${file.filename}`);
+        .jpeg({ quality: 90 });
+      // .toFile(`public/images/${file.filename}`);
+      // .toFile(`public/images/products/${file.filename}`);
 
-      // delete the file(s) from d public folder afetr save
-      fs.unlinkSync(`public/images/products/${file.filename}`);
+      // delete the file(s) from d public folder after save
+      // fs.unlinkSync(`public/images/${file.filename}`);
+      // fs.unlinkSync(`public/images/products/${file.filename}`);
     })
   );
   next();
@@ -61,9 +63,11 @@ const blogImgResize = async (req, res, next) => {
         .resize(300, 300)
         .toFormat("jpeg")
         .jpeg({ quality: 90 })
+        // .toFile(`public/images/${file.filename}`);
         .toFile(`public/images/blogs/${file.filename}`);
 
       // delete the file from d public folder afetr save
+      // fs.unlinkSync(`public/images/${file.filename}`);
       fs.unlinkSync(`public/images/blogs/${file.filename}`);
     })
   );
